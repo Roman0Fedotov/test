@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Подключаем стили DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <title>Таблица с фильтрами</title>
 </head>
 <body>
-    <!-- Ваша таблица (вставьте сюда код из конвертера) -->
+    <!-- ▼▼▼ Выпадающий список для фильтрации ▼▼▼ -->
+    <div>
+        <label>Фильтр по категориям:</label>
+        <select id="categoryFilter">
+            <option value="">Все категории</option>
+        </select>
+    </div>
+
+    <!-- ▼▼▼ Ваша таблица ▼▼▼ -->
     <table id="myTable" class="display">
         <thead>
             <tr>
                 <th>Имя</th>
                 <th>Возраст</th>
-                <th>Город</th>
+                <th>Город</th> <!-- Столбец для фильтрации -->
             </tr>
         </thead>
         <tbody>
@@ -26,20 +33,37 @@
                 <td>30</td>
                 <td>Санкт-Петербург</td>
             </tr>
+            <tr>
+                <td>Мария</td>
+                <td>22</td>
+                <td>Сочи</td>
+            </tr>
         </tbody>
     </table>
 
-    <!-- Подключаем скрипты -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     
-    <!-- Активируем DataTables -->
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable({
-                "language": {  // Русский язык
+            // Инициализация таблицы
+            var table = $('#myTable').DataTable({
+                "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json"
                 }
+            });
+
+            // ▼▼▼ Код для фильтрации ▼▼▼
+            
+            // 1. Собираем уникальные категории из 3-го столбца (индекс 2)
+            table.column(2).data().unique().sort().each(function(value) {
+                $('#categoryFilter').append('<option value="' + value + '">' + value + '</option>');
+            });
+
+            // 2. Применяем фильтр при выборе категории
+            $('#categoryFilter').on('change', function() {
+                var category = this.value;
+                table.column(2).search(category).draw();
             });
         });
     </script>
