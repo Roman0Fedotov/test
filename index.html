@@ -4,11 +4,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <title>Таблица с фильтрами</title>
     <style>
-        /* Стили для выпадающих списков */
         .filter-select {
             width: 100%;
             padding: 4px;
-            margin-bottom: 5px;
+            margin: 2px 0;
         }
     </style>
 </head>
@@ -17,9 +16,9 @@
         <thead>
             <!-- Строка с фильтрами -->
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th><select class="filter-select" data-column="0"><option value="">Все имена</option></select></th>
+                <th><select class="filter-select" data-column="1"><option value="">Все возраста</option></select></th>
+                <th><select class="filter-select" data-column="2"><option value="">Все города</option></select></th>
             </tr>
             <!-- Заголовки таблицы -->
             <tr>
@@ -55,24 +54,23 @@
             var table = $('#myTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json"
-                },
-                "initComplete": function() {
-                    // Добавляем выпадающие списки для каждого столбца
-                    this.api().columns().every(function(index) {
-                        var column = this;
-                        var select = $('<select class="filter-select"><option value="">Все</option></select>')
-                            .appendTo($(column.header()).parent().prev('th')) // Вставляем в верхнюю строку
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-
-                        // Собираем уникальные значения из столбца
-                        column.data().unique().sort().each(function(d) {
-                            select.append($('<option></option>').attr('value', d).text(d));
-                        });
-                    });
                 }
+            });
+
+            // Для каждого столбца собираем уникальные значения и заполняем фильтры
+            table.columns().every(function(index) {
+                var column = this;
+                var $select = $('.filter-select[data-column="' + index + '"]');
+                
+                column.data().unique().sort().each(function(d) {
+                    $select.append('<option value="' + d + '">' + d + '</option>');
+                });
+
+                // Обработчик изменения фильтра
+                $select.on('change', function() {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                });
             });
         });
     </script>
