@@ -6,13 +6,51 @@
 </head>
 <body>
     <!-- ▼▼▼ Выпадающий список для фильтрации ▼▼▼ -->
-    <div>
-        <label>Фильтр по категориям:</label>
-        <select id="categoryFilter">
-            <option value="">Все категории</option>
-        </select>
-    </div>
+   <div style="margin: 20px 0;">
+    <label>Город: </label>
+    <select id="cityFilter">
+        <option value="">Все города</option>
+    </select>
 
+    <label style="margin-left: 20px;">Возраст: </label>
+    <select id="ageFilter">
+        <option value="">Все возраста</option>
+    </select>
+</div>
+<script>
+    $(document).ready(function() {
+        var table = $('#myTable').DataTable();
+
+        // Фильтр по городу
+        table.column(2).data().unique().sort().each(function(value) {
+            $('#cityFilter').append('<option value="' + value + '">' + value + '</option>');
+        });
+
+        // Фильтр по возрасту
+        table.column(1).data().unique().sort().each(function(value) {
+            $('#ageFilter').append('<option value="' + value + '">' + value + '</option>');
+        });
+
+        // Обработчики изменений
+        $('#cityFilter, #ageFilter').on('change', function() {
+            table.draw();
+        });
+
+        // Кастомная фильтрация
+        $.fn.dataTable.ext.search.push(function(settings, data) {
+            var city = $('#cityFilter').val();
+            var age = $('#ageFilter').val();
+            
+            // Проверка города
+            var cityMatch = (city === "") || (data[2] === city);
+            
+            // Проверка возраста
+            var ageMatch = (age === "") || (data[1] === age);
+            
+            return cityMatch && ageMatch;
+        });
+    });
+</script>
     <!-- ▼▼▼ Ваша таблица ▼▼▼ -->
     <table id="myTable" class="display">
         <thead>
