@@ -21,7 +21,6 @@
 <body>
     <table id="myTable" class="display">
         <thead>
-            <!-- Строка с фильтрами -->
             <tr>
                 <th><select class="filter-select" data-column="0" multiple></select></th>
                 <th><select class="filter-select" data-column="1" multiple></select></th>
@@ -35,7 +34,6 @@
                 <th><select class="filter-select" data-column="9" multiple></select></th>
                 <th><select class="filter-select" data-column="10" multiple></select></th>
             </tr>
-            <!-- Заголовки таблицы -->
             <tr>
                 <th>id</th>
                 <th>lemma</th>
@@ -51,10 +49,102 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Тело таблицы без изменений -->
+            <!-- Восстановленные данные -->
+            <tr>
+                <td></td>
+                <td>aвasьj</td>
+                <td>NOUN</td>
+                <td></td>
+                <td>n.</td>
+                <td>аббаси</td>
+                <td>136 tumanь tre qranь, xə aвasьj.<br>136 туманов, два крана, один аббаси. XGP 82/4</td>
+                <td>Pers. عباسی 'abbāsī 'Belonging unto the house of Abbās; also a species of coin named from those caliphs' CPED 833</td>
+                <td>four shahis, one-fifth of a qran 234a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>aвeta</td>
+                <td>NOUN</td>
+                <td></td>
+                <td>n.f., pl. aвajatь</td>
+                <td>куртка, верхняя одежда</td>
+                <td>urzi —... alle aвajatь kirji u şalvarь pitji мужчины - ... в коротких куртках и широких шароварах HSI 3/12</td>
+                <td></td>
+                <td>'âbâ-yâ a cloak 234a</td>
+                <td></td>
+                <td>+ʾabeta 'rough woolen cloak'</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>aвu-hava</td>
+                <td>NOUN</td>
+                <td></td>
+                <td>n.</td>
+                <td>стихия</td>
+                <td>lazьm ijlə, qəd ənij peşij tulmiddi go aвu-hava d gəne нужно, чтоб они воспитывались в родной стихии SPA 10/11</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>acux</td>
+                <td>ADJ</td>
+                <td></td>
+                <td>adj. invar.</td>
+                <td>яркий</td>
+                <td>вiqnəzeli ajnu al pənçəri acux smuqi d umra d mətə щурит глаза на ярко-красные окна деревенской церкви CEX 12/17-18</td>
+                <td></td>
+                <td>âchigh bold, fearless; open, clear, of colours 11a</td>
+                <td></td>
+                <td>+ʾačux 'of colour: open, bright'</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>açabta</td>
+                <td>NOUN</td>
+                <td></td>
+                <td>n.f.</td>
+                <td>удивление</td>
+                <td>«Bəs qalla ekelə?» — вuqьrrьj ənə в açaвta Где же крепость? - спросил я с удивлением PBQ 26/7</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>açazta</td>
+                <td>NOUN</td>
+                <td></td>
+                <td>n.f.</td>
+                <td>мучение, обида</td>
+                <td>Əxtun ijtun jətumtə: vud вavar, вiqvəlitun al nəhəqutə u aççazta? Вы сирота: вероятно, вы жалуетесь на несправедливость и обиду? PBQ 124/21</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>aççuzъ</td>
+                <td>VERB</td>
+                <td>ii</td>
+                <td>p.p.f. uçьzta</td>
+                <td>утомлять, мучить, обижать</td>
+                <td>Lə məhlumutə d ьqвal d Marija Ivanovna min kulle вuş zodə aççuzьva illij Неизвестность о судьбе Марьи Ивановны пуще всего меня мучила PBQ 73/7</td>
+                <td></td>
+                <td>a to annoy, vex, trouble 187</td>
+                <td></td>
+                <td>+'ajjəz 'to annoy; to trouble, to bother, to suppress'</td>
+            </tr>
         </tbody>
     </table>
 
+    <!-- Остальная часть кода без изменений -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -69,14 +159,12 @@
                 "autoWidth": true
             });
 
-            // Инициализация Select2 для всех фильтров
             $('.filter-select').select2({
                 placeholder: "Выберите значения",
                 allowClear: true,
                 width: 'resolve'
             });
 
-            // Заполнение фильтров уникальными значениями
             table.columns().every(function(index) {
                 var column = this;
                 var $select = $('.filter-select[data-column="' + index + '"]');
@@ -86,7 +174,6 @@
                 });
             });
 
-            // Обработчик изменения фильтров
             $('.filter-select').on('change', function() {
                 var columnIdx = $(this).data('column');
                 var selectedValues = $(this).val();
