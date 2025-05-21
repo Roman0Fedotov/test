@@ -3,61 +3,30 @@
 <head>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <title>Таблица с фильтрами</title>
+    <style>
+        /* Стили для полей фильтрации */
+        .filter-input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <!-- ▼▼▼ Выпадающий список для фильтрации ▼▼▼ -->
-   <div style="margin: 20px 0;">
-    <label>Город: </label>
-    <select id="cityFilter">
-        <option value="">Все города</option>
-    </select>
-
-    <label style="margin-left: 20px;">Возраст: </label>
-    <select id="ageFilter">
-        <option value="">Все возраста</option>
-    </select>
-</div>
-<script>
-    $(document).ready(function() {
-        var table = $('#myTable').DataTable();
-
-        // Фильтр по городу
-        table.column(2).data().unique().sort().each(function(value) {
-            $('#cityFilter').append('<option value="' + value + '">' + value + '</option>');
-        });
-
-        // Фильтр по возрасту
-        table.column(1).data().unique().sort().each(function(value) {
-            $('#ageFilter').append('<option value="' + value + '">' + value + '</option>');
-        });
-
-        // Обработчики изменений
-        $('#cityFilter, #ageFilter').on('change', function() {
-            table.draw();
-        });
-
-        // Кастомная фильтрация
-        $.fn.dataTable.ext.search.push(function(settings, data) {
-            var city = $('#cityFilter').val();
-            var age = $('#ageFilter').val();
-            
-            // Проверка города
-            var cityMatch = (city === "") || (data[2] === city);
-            
-            // Проверка возраста
-            var ageMatch = (age === "") || (data[1] === age);
-            
-            return cityMatch && ageMatch;
-        });
-    });
-</script>
-    <!-- ▼▼▼ Ваша таблица ▼▼▼ -->
+    <!-- Таблица -->
     <table id="myTable" class="display">
         <thead>
+            <!-- Строка с фильтрами -->
+            <tr>
+                <th><input type="text" class="filter-input" placeholder="Фильтр по имени"></th>
+                <th><input type="text" class="filter-input" placeholder="Фильтр по возрасту"></th>
+                <th><input type="text" class="filter-input" placeholder="Фильтр по городу"></th>
+            </tr>
+            <!-- Заголовки таблицы -->
             <tr>
                 <th>Имя</th>
                 <th>Возраст</th>
-                <th>Город</th> <!-- Столбец для фильтрации -->
+                <th>Город</th>
             </tr>
         </thead>
         <tbody>
@@ -88,20 +57,22 @@
             var table = $('#myTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json"
+                },
+                // Добавляем фильтры в заголовки
+                "initComplete": function() {
+                    this.api().columns().every(function() {
+                        var column = this;
+                        
+                        // Создаем поле ввода для каждого столбца
+                        $('<input type="text" class="filter-input" placeholder="Поиск...">')
+                            .appendTo($(column.header()).empty())
+                            .on('keyup change', function() {
+                                if (column.search() !== this.value) {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                    });
                 }
-            });
-
-            // ▼▼▼ Код для фильтрации ▼▼▼
-            
-            // 1. Собираем уникальные категории из 3-го столбца (индекс 2)
-            table.column(2).data().unique().sort().each(function(value) {
-                $('#categoryFilter').append('<option value="' + value + '">' + value + '</option>');
-            });
-
-            // 2. Применяем фильтр при выборе категории
-            $('#categoryFilter').on('change', function() {
-                var category = this.value;
-                table.column(2).search(category).draw();
             });
         });
     </script>
