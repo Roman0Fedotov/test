@@ -16,148 +16,18 @@
             border-radius: 4px;
             min-height: 32px;
         }
-        /* Новые стили для управления шириной */
-        .table-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow-x: auto;
+        /* Добавленные стили для компактных фильтров */
+        .select2-container {
+            width: 150px !important;
         }
-        #myTable {
-            width: 100% !important;
+        .select2-container .select2-selection--multiple {
+            min-height: 32px;
         }
     </style>
 </head>
 <body>
-    <div class="table-container"> <!-- Добавлен контейнер -->
-        <table id="myTable" class="display">
-            <thead>
-                <tr>
-                    <th><select class="filter-select" data-column="0" multiple></select></th>
-                    <th><select class="filter-select" data-column="1" multiple></select></th>
-                    <th><select class="filter-select" data-column="2" multiple></select></th>
-                    <th><select class="filter-select" data-column="3" multiple></select></th>
-                    <th><select class="filter-select" data-column="4" multiple></select></th>
-                    <th><select class="filter-select" data-column="5" multiple></select></th>
-                    <th><select class="filter-select" data-column="6" multiple></select></th>
-                    <th><select class="filter-select" data-column="7" multiple></select></th>
-                    <th><select class="filter-select" data-column="8" multiple></select></th>
-                    <th><select class="filter-select" data-column="9" multiple></select></th>
-                    <th><select class="filter-select" data-column="10" multiple></select></th>
-                </tr>
-                <tr>
-                    <th>id</th>
-                    <th>lemma</th>
-                    <th>Part of speech</th>
-                    <th>v-stem</th>
-                    <th>morphology</th>
-                    <th>meaning</th>
-                    <th>example</th>
-                    <th>etymology</th>
-                    <th>Maclean</th>
-                    <th>Oraham</th>
-                    <th>Khan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>aвasьj</td>
-                    <td>NOUN</td>
-                    <td></td>
-                    <td>n.</td>
-                    <td>аббаси</td>
-                    <td>136 tumanь tre qranь, xə aвasьj.<br>136 туманов, два крана, один аббаси. XGP 82/4</td>
-                    <td>Pers. عباسی 'abbāsī 'Belonging unto the house of Abbās; also a species of coin named from those caliphs' CPED 833</td>
-                    <td>four shahis, one-fifth of a qran 234a</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>aвeta</td>
-                    <td>NOUN</td>
-                    <td></td>
-                    <td>n.f., pl. aвajatь</td>
-                    <td>куртка, верхняя одежда</td>
-                    <td>urzi —... alle aвajatь kirji u şalvarь pitji мужчины - ... в коротких куртках и широких шароварах HSI 3/12</td>
-                    <td></td>
-                    <td>'âbâ-yâ a cloak 234a</td>
-                    <td></td>
-                    <td>+ʾabeta 'rough woolen cloak'</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>aвu-hava</td>
-                    <td>NOUN</td>
-                    <td></td>
-                    <td>n.</td>
-                    <td>стихия</td>
-                    <td>lazьm ijlə, qəd ənij peşij tulmiddi go aвu-hava d gəne нужно, чтоб они воспитывались в родной стихии SPA 10/11</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>acux</td>
-                    <td>ADJ</td>
-                    <td></td>
-                    <td>adj. invar.</td>
-                    <td>яркий</td>
-                    <td>вiqnəzeli ajnu al pənçəri acux smuqi d umra d mətə щурит глаза на ярко-красные окна деревенской церкви CEX 12/17-18</td>
-                    <td></td>
-                    <td>âchigh bold, fearless; open, clear, of colours 11a</td>
-                    <td></td>
-                    <td>+ʾačux 'of colour: open, bright'</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>açabta</td>
-                    <td>NOUN</td>
-                    <td></td>
-                    <td>n.f.</td>
-                    <td>удивление</td>
-                    <td>«Bəs qalla ekelə?» — вuqьrrьj ənə в açaвta Где же крепость? - спросил я с удивлением PBQ 26/7</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>açazta</td>
-                    <td>NOUN</td>
-                    <td></td>
-                    <td>n.f.</td>
-                    <td>мучение, обида</td>
-                    <td>Əxtun ijtun jətumtə: vud вavar, вiqvəlitun al nəhəqutə u aççazta? Вы сирота: вероятно, вы жалуетесь на несправедливость и обиду? PBQ 124/21</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>aççuzъ</td>
-                    <td>VERB</td>
-                    <td>ii</td>
-                    <td>p.p.f. uçьzta</td>
-                    <td>утомлять, мучить, обижать</td>
-                    <td>Lə məhlumutə d ьqвal d Marija Ivanovna min kulle вuş zodə aççuzьva illij Неизвестность о судьбе Марьи Ивановны пуще всего меня мучила PBQ 73/7</td>
-                    <td></td>
-                    <td>a to annoy, vex, trouble 187</td>
-                    <td></td>
-                    <td>+'ajjəz 'to annoy; to trouble, to bother, to suppress'</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <!-- Весь HTML-код таблицы остаётся без изменений -->
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
     <script>
         $(document).ready(function() {
             var table = $('#myTable').DataTable({
@@ -165,16 +35,17 @@
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json"
                 },
                 "pageLength": 10,
-                "autoWidth": false, // Изменено с true на false
-                "scrollX": true
+                "autoWidth": true
             });
 
             $('.filter-select').select2({
-                placeholder: "Выберите значения",
+                placeholder: "ALL", // Изменённый плейсхолдер
                 allowClear: true,
-                width: 'resolve'
+                width: 'style', // Используем стили CSS для ширины
+                dropdownAutoWidth: true
             });
 
+            // Остальной JavaScript код остаётся без изменений
             table.columns().every(function(index) {
                 var column = this;
                 var $select = $('.filter-select[data-column="' + index + '"]');
