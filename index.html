@@ -4,23 +4,22 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <title>Таблица с фильтрами</title>
     <style>
-        /* Стили для полей фильтрации */
-        .filter-input {
+        /* Стили для выпадающих списков */
+        .filter-select {
             width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
+            padding: 4px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <!-- Таблица -->
     <table id="myTable" class="display">
         <thead>
             <!-- Строка с фильтрами -->
             <tr>
-                <th><input type="text" class="filter-input" placeholder="Фильтр по имени"></th>
-                <th><input type="text" class="filter-input" placeholder="Фильтр по возрасту"></th>
-                <th><input type="text" class="filter-input" placeholder="Фильтр по городу"></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             <!-- Заголовки таблицы -->
             <tr>
@@ -53,24 +52,25 @@
     
     <script>
         $(document).ready(function() {
-            // Инициализация таблицы
             var table = $('#myTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/ru.json"
                 },
-                // Добавляем фильтры в заголовки
                 "initComplete": function() {
-                    this.api().columns().every(function() {
+                    // Добавляем выпадающие списки для каждого столбца
+                    this.api().columns().every(function(index) {
                         var column = this;
-                        
-                        // Создаем поле ввода для каждого столбца
-                        $('<input type="text" class="filter-input" placeholder="Поиск...">')
-                            .appendTo($(column.header()).empty())
-                            .on('keyup change', function() {
-                                if (column.search() !== this.value) {
-                                    column.search(this.value).draw();
-                                }
+                        var select = $('<select class="filter-select"><option value="">Все</option></select>')
+                            .appendTo($(column.header()).parent().prev('th')) // Вставляем в верхнюю строку
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
                             });
+
+                        // Собираем уникальные значения из столбца
+                        column.data().unique().sort().each(function(d) {
+                            select.append($('<option></option>').attr('value', d).text(d));
+                        });
                     });
                 }
             });
